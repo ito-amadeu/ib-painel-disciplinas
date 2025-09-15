@@ -1,0 +1,191 @@
+﻿codigo,nome,turma,dia,inicio,fim,sala
+BA210,Anatomia Humana II,A,Terça,14:00,17:00,BA02
+BA210,Anatomia Humana II,A,Terça,17:00,18:00,IB01
+BA210,Anatomia Humana II,B,Terça,19:00,22:00,BA02
+BA210,Anatomia Humana II,B,Terça,22:00,23:00,IB12
+BA281,Anatomia Humana Geral,A,Segunda,14:00,17:00,BA02
+BA281,Anatomia Humana Geral,A,Segunda,17:00,18:00,IB12
+BA480,Anatomia Humana Geral,A,Segunda,19:00,22:00,BA02
+BA480,Anatomia Humana Geral,A,Segunda,22:00,23:00,IB02
+BA581,Esplancnologia,A,Quarta,14:00,15:00,IB01
+BA581,Esplancnologia,A,Quarta,15:00,18:00,MB04
+BA583,Biologia da Regeneração Nervosa,A,Quarta,08:00,10:00,IB15
+BA583,Biologia da Regeneração Nervosa,A,Quarta,10:00,12:00,LB07
+BB110,Bioquímica,A,Quarta,08:00,11:00,LB01
+BB110,Bioquímica,A,Quarta,11:00,12:00,IB12
+BB110,Bioquímica,B,Segunda,19:00,22:00,LB01
+BB110,Bioquímica,B,Segunda,22:00,23:00,IB12
+BB281,Bioquímica de Proteínas,A,Terça,14:00,15:00,IB03
+BB281,Bioquímica de Proteínas,A,Terça,15:00,18:00,LB01
+BB281,Bioquímica de Proteínas,B,Quarta,19:00,20:00,IB01
+BB281,Bioquímica de Proteínas,B,Quarta,20:00,23:00,LB06
+BB315,Bioquímica,A,Terça,08:00,12:00,IB16
+BB315,Bioquímica,A,Quinta,10:00,12:00,IB16
+BB315,Bioquímica,A,Quinta,14:00,16:00,IB16
+BC282,Biologia Celular II,A,Segunda,08:00,09:00,MB03
+BC282,Biologia Celular II,A,Segunda,09:00,10:00,IB15
+BC283,Biologia Celular II,A,Segunda,19:00,20:00,IB03
+BC283,Biologia Celular II,A,Segunda,20:00,21:00,LB04
+BC591,Sinalização Celular,A,Quarta,14:00,18:00,PB05
+BC592,Biologia Celular do Câncer,A,Terça,14:00,18:00,IB12
+BC680,Biologia Celular e Molecular,A,Sexta,08:00,09:00,IB03
+BC680,Biologia Celular e Molecular,A,Sexta,09:00,12:00,MB04
+BC695,Citogenética,A,Quarta,14:00,17:00,IB04
+BD520,Fundamentos Éticos para o Exercício Profissional do Biólogo,A,Segunda,08:00,09:00,IB12
+BD520,Fundamentos Éticos para o Exercício Profissional do Biólogo,A,Segunda,09:00,10:00,LB06
+BD520,Fundamentos Éticos para o Exercício Profissional do Biólogo,B,Quarta,19:00,20:00,IB03
+BD520,Fundamentos Éticos para o Exercício Profissional do Biólogo,B,Quarta,20:00,21:00,LB03
+BD581,Tópicos Especiais em Áreas das Ciências Biológicas VI,A,Segunda,16:00,18:00,PB03
+BD581,Tópicos Especiais em Áreas das Ciências Biológicas VI,B,Terça,08:00,10:00,IB02
+BD792,Temas Transversais no Ensino de Biologia III,A,Segunda,14:00,16:00,IB13
+BE310,Ciências do Ambiente,A,Quinta,10:00,12:00,CB04
+BE310,Ciências do Ambiente,B,Quinta,21:00,23:00,IB01
+BE480,Ecologia Básica,A,Sexta,08:00,12:00,IB16
+BE480,Ecologia Básica,B,Quarta,19:00,23:00,IB04
+BE588,Ecologia de Montanhas,A,Segunda,16:00,18:00,IB03
+BE588,Ecologia de Montanhas,B,Segunda,21:00,23:00,IB13
+BE594,Ecologia de Interações,A,Segunda,14:00,16:00,IB01
+BF092,O Corpo Humano,A,Terça,16:00,18:00,CB02
+BF223,Fisiologia do Movimento,A,Sexta,10:00,11:00,IB15
+BF223,Fisiologia do Movimento,A,Sexta,11:00,12:00,MB02
+BF284,Fisiologia e Biofísica Humana Básica,A,Quarta,08:00,12:00,IB04
+BF284,Fisiologia e Biofísica Humana Básica,A,Quinta,09:00,12:00,IB04
+BF410,Fisiologia Humana II,A,Terça,10:00,12:00,IB01
+BF412,Fisiologia Humana II,A,Terça,19:00,21:00,IB16
+BF481,Biofísica e Fisiologia Humana II,A,Segunda,14:00,16:00,IB04
+BF481,Biofísica e Fisiologia Humana II,A,Segunda,16:00,18:00,LB03
+BF483,Biofísica e Fisiologia Humana I,A,Quinta,19:00,21:00,IB02
+BF483,Biofísica e Fisiologia Humana I,A,Quinta,21:00,23:00,MB01
+BG200,Bioestatística,A,Quinta,14:00,16:00,IB02
+BG200,Bioestatística,A,Quinta,16:00,18:00,LB01
+BG200,Bioestatística,B,Quarta,19:00,21:00,IB02
+BG200,Bioestatística,B,Quarta,21:00,23:00,MB01
+BG282,Genética I,A,Quinta,10:00,11:00,IB03
+BG282,Genética I,A,Quinta,11:00,12:00,MB04
+BG480,Genética e Evolução,A,Quarta,14:00,18:00,CB10
+BG481,Genética I,A,Sexta,21:00,22:00,IB04
+BG481,Genética I,A,Sexta,22:00,23:00,LB02
+BG580,Mecanismos de Evolução,A,Terça,14:00,18:00,IB15
+BG580,Mecanismos de Evolução,A,Quarta,08:00,10:00,SM01
+BG582,Genética Molecular,A,Sexta,08:00,09:00,IB04
+BG582,Genética Molecular,A,Sexta,09:00,12:00,MB03
+BG680,Genética e Evolução,A,Terça,19:00,23:00,PB01
+BH127,Embriologia,A,Segunda,08:00,10:00,IB03
+BH282,Fundamentos da Biologia Tecidual,A,Quarta,08:00,10:00,IB03
+BH282,Fundamentos da Biologia Tecidual,A,Quarta,10:00,12:00,LB03
+BH420,Embriologia Comparada,A,Quinta,14:00,15:00,IB03
+BH420,Embriologia Comparada,A,Quinta,15:00,16:00,LB03
+BH482,Fundamentos da Biologia Tecidual,A,Terça,19:00,21:00,IB01
+BH482,Fundamentos da Biologia Tecidual,A,Terça,21:00,23:00,MB03
+BH620,Embriologia Comparada,A,Sexta,19:00,20:00,IB03
+BH620,Embriologia Comparada,A,Sexta,20:00,21:00,LB03
+BH684,Embriologia Humana,A,Terça,14:00,16:00,IB13
+BH684,Embriologia Humana,A,Terça,16:00,18:00,LB02
+BI214,Imunologia,A,Terça,14:00,16:00,IB04
+BI214,Imunologia,A,Terça,16:00,17:00,MB02
+BI583,Imunologia,A,Quarta,14:00,16:00,IB02
+BI583,Imunologia,A,Quarta,16:00,18:00,LB08
+BL029,Metodologia e Práticas de Ensino em Biologia II: Ciências Morfofuncionais II,A,Segunda,21:00,23:00,LB07
+BL031,Metodologia e Prática de Ensino em Biologia IV: Doenças Infecciosas,A,Quarta,16:00,17:00,IB12
+BL031,Metodologia e Prática de Ensino em Biologia IV: Doenças Infecciosas,A,Quarta,17:00,18:00,LB06
+BL031,Metodologia e Prática de Ensino em Biologia IV: Doenças Infecciosas,B,Quarta,19:00,20:00,IB12
+BL031,Metodologia e Prática de Ensino em Biologia IV: Doenças Infecciosas,B,Quarta,20:00,21:00,LB04
+BL035,Metodologia e Prática de Ensino em Biologia: Ecologia e Fauna,A,Quarta,16:00,17:00,IB16
+BL035,Metodologia e Prática de Ensino em Biologia: Ecologia e Fauna,A,Quarta,17:00,18:00,MB03
+BL035,Metodologia e Prática de Ensino em Biologia: Ecologia e Fauna,B,Quarta,21:00,22:00,IB12
+BL035,Metodologia e Prática de Ensino em Biologia: Ecologia e Fauna,B,Quarta,22:00,23:00,LB05
+BL037,Metodologia e Práticas de Ensino em Ciências e Biologia: Morfofisiologia,A,Segunda,10:00,11:00,IB12
+BL037,Metodologia e Práticas de Ensino em Ciências e Biologia: Morfofisiologia,A,Segunda,11:00,12:00,MB01
+BL037,Metodologia e Práticas de Ensino em Ciências e Biologia: Morfofisiologia,B,Segunda,21:00,22:00,IB04
+BL037,Metodologia e Práticas de Ensino em Ciências e Biologia: Morfofisiologia,B,Segunda,22:00,23:00,MB01
+BL583,Construção de Mídias para o Ensino de Ciências e Biologia,A,Segunda,10:00,11:00,IB01
+BL583,Construção de Mídias para o Ensino de Ciências e Biologia,A,Segunda,11:00,12:00,MB03
+BL583,Construção de Mídias para o Ensino de Ciências e Biologia,B,Segunda,21:00,22:00,IB01
+BL583,Construção de Mídias para o Ensino de Ciências e Biologia,B,Segunda,22:00,23:00,LB01
+BL600,Produção e Análise de Textos em Ciências Biológicas,A,Segunda,16:00,18:00,IB01
+BL600,Produção e Análise de Textos em Ciências Biológicas,B,Segunda,19:00,21:00,IB04
+BM215,Microbiologia,A,Quinta,14:00,16:00,IB04
+BM215,Microbiologia,A,Sexta,14:00,16:00,IB04
+BM415,Microbiologia,A,Quarta,08:00,10:00,IB16
+BM415,Microbiologia,A,Quinta,08:00,10:00,IB16
+BP223,Parasitologia,A,Segunda,14:00,16:00,IB15
+BP223,Parasitologia,A,Segunda,16:00,18:00,LB02
+BP670,História Natural dos Insetos,A,Terça,14:00,16:00,IB16
+BP670,História Natural dos Insetos,A,Terça,16:00,18:00,LB05
+BP820,Zooparasitologia,A,Sexta,19:00,23:00,IB16
+BS112,Fundamentos de Anatomia e Radiologia dos Sistemas Orgânicos,A,Quarta,08:00,12:00,IB01
+BS112,Fundamentos de Anatomia e Radiologia dos Sistemas Orgânicos,A,Sexta,14:00,18:00,IB01
+BS113,Bases da Embriologia e da Histologia dos Sistemas do Corpo Humano,A,Segunda,10:00,12:00,IB02
+BS113,Bases da Embriologia e da Histologia dos Sistemas do Corpo Humano,A,Segunda,14:00,18:00,IB02
+BS114,Bases Bioquímicas e Fisiológicas do Corpo Humano II,A,Quinta,08:00,12:00,IB02
+BS114,Bases Bioquímicas e Fisiológicas do Corpo Humano II,A,Sexta,08:00,12:00,IB02
+BS203,Bases Funcionais do Corpo Humano II,A,Segunda,08:00,10:00,MB05
+BS203,Bases Funcionais do Corpo Humano II,A,Quinta,08:00,12:00,MB05
+BS203,Bases Funcionais do Corpo Humano II,A,Sexta,08:00,12:00,MB05
+BS215,Estrutura e Função de Órgãos e Sistemas,A,Segunda,08:00,12:00,IB04
+BS215,Estrutura e Função de Órgãos e Sistemas,A,Terça,08:00,12:00,IB04
+BS215,Estrutura e Função de Órgãos e Sistemas,A,Quinta,08:00,12:00,IB15
+BS280,Neurociências para a Fonoaudiologia,A,Terça,08:00,10:00,IB03
+BS280,Neurociências para a Fonoaudiologia,A,Terça,10:00,12:00,LB03
+BS313,"Princípios Básicos de Biologia Celular, Microbiologia e Parasitologia",A,Quarta,21:00,23:00,IB03
+BS313,"Princípios Básicos de Biologia Celular, Microbiologia e Parasitologia",A,Quinta,19:00,21:00,IB04
+BS420,Relação Patógeno-Hospedeiro III,A,Quarta,08:00,12:00,IB02
+BS420,Relação Patógeno-Hospedeiro III,A,Quinta,14:00,16:00,IB01
+BS430,Relação Patógeno-Hospedeiro IV,A,Quinta,16:00,18:00,IB01
+BS456,Biodiversidade e Seres Vivos,A,Quinta,19:00,22:00,IB16
+BS456,Biodiversidade e Seres Vivos,A,Quinta,22:00,23:00,LB06
+BS615,Cultivo de Células Animais - Aplicações em Ensaios Biológicos,A,Quarta,14:00,16:00,IB03
+BS615,Cultivo de Células Animais - Aplicações em Ensaios Biológicos,A,Quarta,16:00,18:00,MB05
+BS656,Corpo Humano e Saúde,A,Terça,19:00,22:00,IB15
+BS681,"Fundamentos de Anatomia, Histologia e Fisiologia Humana para Física Médica",A,Quinta,14:00,15:00,IB13
+BS681,"Fundamentos de Anatomia, Histologia e Fisiologia Humana para Física Médica",A,Quinta,15:00,18:00,LB06
+BT201,Biogeografia,A,Quinta,09:00,11:00,IB14
+BT201,Biogeografia,A,Quinta,11:00,12:00,MB03
+BT201,Biogeografia,B,Terça,19:00,21:00,IB04
+BT201,Biogeografia,B,Terça,21:00,22:00,LB04
+BT285,Sistemática de Criptógamas e Gimnospermas,A,Sexta,14:00,16:00,IB03
+BT285,Sistemática de Criptógamas e Gimnospermas,A,Sexta,16:00,18:00,LB04
+BT285,Sistemática de Criptógamas e Gimnospermas,B,Quinta,19:00,21:00,IB03
+BT285,Sistemática de Criptógamas e Gimnospermas,B,Quinta,21:00,23:00,LB01
+BT330,Botânica Básica,A,Terça,14:00,16:00,IB02
+BT485,Sistemática de Angiospermas I,A,Sexta,14:00,16:00,IB16
+BT485,Sistemática de Angiospermas I,A,Sexta,16:00,18:00,MB03
+BT485,Sistemática de Angiospermas I,B,Sexta,19:00,21:00,IB02
+BT485,Sistemática de Angiospermas I,B,Sexta,21:00,23:00,MB03
+BT582,Sistemática de Angiospermas II,A,Quarta,10:00,12:00,IB16
+BT582,Sistemática de Angiospermas II,A,Quarta,14:00,18:00,IB15
+BT597,Anatomia Ecológica,A,Terça,14:00,18:00,SM03
+BT681,Botânica Econômica,A,Segunda,14:00,16:00,IB03
+BT681,Botânica Econômica,B,Segunda,19:00,21:00,IB01
+BT682,Ecologia Vegetal,A,Terça,08:00,10:00,IB13
+BT682,Ecologia Vegetal,A,Terça,10:00,12:00,LB02
+BV481,Fisiologia Vegetal Básica: Metabolismo,A,Quinta,08:00,10:00,IB01
+BV481,Fisiologia Vegetal Básica: Metabolismo,A,Quinta,10:00,12:00,LB01
+BV586,Propagação e Reprodução de Plantas,A,Segunda,09:00,10:00,IB13
+BV586,Propagação e Reprodução de Plantas,A,Segunda,10:00,12:00,LB07
+BV587,Cultura de Tecidos Vegetais,A,Segunda,14:00,15:00,IB16
+BV587,Cultura de Tecidos Vegetais,A,Segunda,15:00,17:00,LB07
+BV620,Fisiologia Vegetal Geral: Metabolismo,A,Segunda,19:00,21:00,IB16
+BV620,Fisiologia Vegetal Geral: Metabolismo,A,Segunda,21:00,23:00,LB06
+BV880,Melhoramento Genético de Plantas,A,Sexta,14:00,16:00,IB15
+BV880,Melhoramento Genético de Plantas,A,Sexta,16:00,18:00,LB05
+BV915,Metabolismo Vegetal e Produção de Fitofármacos,A,Quarta,14:00,15:00,IB13
+BV915,Metabolismo Vegetal e Produção de Fitofármacos,A,Quarta,15:00,16:00,MB05
+BV915,Metabolismo Vegetal e Produção de Fitofármacos,B,Quarta,19:00,20:00,IB13
+BV915,Metabolismo Vegetal e Produção de Fitofármacos,B,Quarta,20:00,21:00,MB04
+BX003,Práticas de Extensão em Ciências Biológicas III,A,Sábado,08:00,10:00,IB13
+BX004,Práticas de Extensão em Ciências Biológicas IV,A,Segunda,08:00,10:00,LB07
+BZ281,Zoologia de Invertebrados I,A,Sexta,19:00,21:00,IB14
+BZ281,Zoologia de Invertebrados I,A,Sexta,21:00,23:00,MB05
+BZ285,Zoologia de Invertebrados I,A,Sexta,08:00,10:00,IB01
+BZ285,Zoologia de Invertebrados I,A,Sexta,10:00,12:00,LB01
+BZ285,Zoologia de Invertebrados I,B,Sexta,19:00,21:00,IB01
+BZ285,Zoologia de Invertebrados I,B,Sexta,21:00,23:00,LB01
+BZ485,Zoologia de Vertebrados,A,Terça,08:00,10:00,IB12
+BZ485,Zoologia de Vertebrados,A,Terça,10:00,12:00,LB06
+BZ485,Zoologia de Vertebrados,B,Terça,19:00,21:00,IB02
+BZ485,Zoologia de Vertebrados,B,Terça,21:00,23:00,MB01
+BZ550,Tópicos em Zoologia I,A,Sexta,14:00,16:00,IB13
+BZ560,Tópicos em Zoologia II,A,Quinta,14:00,16:00,IB15
+BZ560,Tópicos em Zoologia II,A,Quinta,16:00,17:00,LB07
+VI402,Princípios de Biologia Funcional,A,Segunda,14:00,18:00,IB05
