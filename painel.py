@@ -74,7 +74,8 @@ else:
         subset = disciplinas[disciplinas["periodo"] == periodo]
         if not subset.empty:
             st.subheader(periodo)
-            st.dataframe(
-                subset[["codigo", "nome", "turma", "inicio", "fim", "sala", "status"]]
+            st.table(
+                subset.reset_index(drop=True)[
+                    ["codigo", "nome", "turma", "inicio", "fim", "sala", "status"]
+                ]
             )
-
