@@ -52,11 +52,11 @@ def calcular_status(row):
     )
 
     if inicio <= agora <= fim:
-        return f"⏳ {formatar_tempo(fim - agora)} restantes"
+        return "andamento", f"⏳ {formatar_tempo(fim - agora)} restantes"
     elif agora < inicio:
-        return f"🕒 começa em {formatar_tempo(inicio - agora)}"
+        return "futuro", f"🕒 começa em {formatar_tempo(inicio - agora)}"
     else:
-        return "✅ Encerrada"
+        return "encerrada", None
 
 st.title("📚 Painel de Disciplinas - IB Unicamp")
 
@@ -67,15 +67,34 @@ if disciplinas.empty:
     st.warning("Nenhuma disciplina encontrada para hoje 📭")
 else:
     disciplinas["periodo"] = disciplinas["inicio"].apply(classificar_periodo)
-    disciplinas["status"] = disciplinas.apply(calcular_status, axis=1)
+    disciplinas[["categoria", "status"]] = disciplinas.apply(
+        calcular_status, axis=1, result_type="expand"
+    )
+
+    # Mantém só em andamento e futuras
+    disciplinas = disciplinas[disciplinas["categoria"] != "encerrada"]
 
     # Exibe por período (empilhados)
     for periodo in ["🌅 Manhã", "🌇 Tarde", "🌙 Noite"]:
         subset = disciplinas[disciplinas["periodo"] == periodo]
         if not subset.empty:
             st.subheader(periodo)
-            st.table(
-                subset.reset_index(drop=True)[
-                    ["codigo", "nome", "turma", "inicio", "fim", "sala", "status"]
-                ]
-            )
+
+            andamento = subset[subset["categoria"] == "andamento"]
+            futuro = subset[subset["categoria"] == "futuro"]
+
+            if not andamento.empty:
+                st.markdown("### ⏳ Em andamento")
+                st.table(
+                    andamento.reset_index(drop=True)[
+                        ["codigo", "nome", "turma", "inicio", "fim", "sala", "status"]
+                    ]
+                )
+
+            if not futuro.empty:
+                st.markdown("### 🕒 Próximas")
+                st.table(
+                    futuro.reset_index(drop=True)[
+                        ["codigo", "nome", "turma", "inicio", "fim", "sala", "status"]
+                    ]
+                )
