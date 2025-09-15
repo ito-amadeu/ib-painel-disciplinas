@@ -83,7 +83,7 @@ else:
     for periodo, grupo in andamento.groupby("período"):
         st.markdown(f"### {periodo}")
         st.dataframe(
-            grupo[["codigo", "nome", "turma", "inicio", "fim", "sala", "status"]],
+            grupo[["codigo", "sala", "turma", "nome", "inicio", "fim", "status"]],
             hide_index=True,
             use_container_width=True
         )
@@ -99,4 +99,5 @@ else:
             hide_index=True,
             use_container_width=True
         )
+
 
