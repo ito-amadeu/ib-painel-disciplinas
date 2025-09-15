@@ -14,7 +14,7 @@ if hasattr(st, "autorefresh"):
 st_autorefresh(interval=60 * 1000, key="refresh")
 
 # Carrega a planilha
-df = pd.read_excel("disciplinas.xlsx")
+df = pd.read_csv("disciplinas_ib.csv")
 
 # Função para obter disciplinas do dia atual
 def disciplinas_do_dia():
@@ -51,3 +51,4 @@ else:
         if not subset.empty:
             st.subheader(periodo)
             st.dataframe(subset[["codigo", "nome", "turma", "inicio", "fim", "sala"]])
+
