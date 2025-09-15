@@ -12,6 +12,7 @@ tz = pytz.timezone("America/Sao_Paulo")
 
 # Carrega a planilha
 df = pd.read_csv("disciplinas_ib.csv")
+
 # Função para obter disciplinas do dia atual
 def disciplinas_do_dia():
     hoje = datetime.now(tz).strftime("%A")
@@ -31,7 +32,16 @@ def classificar_periodo(hora):
     else:
         return "🌙 Noite"
 
-# Função para calcular status e tempo restante
+# Função para formatar duração em horas e minutos
+def formatar_tempo(delta):
+    total_min = int(delta.total_seconds() // 60)
+    horas, minutos = divmod(total_min, 60)
+    if horas > 0:
+        return f"{horas}h {minutos}min"
+    else:
+        return f"{minutos}min"
+
+# Função para calcular status
 def calcular_status(row):
     agora = datetime.now(tz)
     inicio = datetime.strptime(row["inicio"], "%H:%M").replace(
@@ -42,11 +52,9 @@ def calcular_status(row):
     )
 
     if inicio <= agora <= fim:
-        minutos = int((fim - agora).total_seconds() // 60)
-        return f"⏳ {minutos} min restantes"
+        return f"⏳ {formatar_tempo(fim - agora)} restantes"
     elif agora < inicio:
-        minutos = int((inicio - agora).total_seconds() // 60)
-        return f"🕒 começa em {minutos} min"
+        return f"🕒 começa em {formatar_tempo(inicio - agora)}"
     else:
         return "✅ Encerrada"
 
@@ -61,14 +69,12 @@ else:
     disciplinas["periodo"] = disciplinas["inicio"].apply(classificar_periodo)
     disciplinas["status"] = disciplinas.apply(calcular_status, axis=1)
 
-    # Exibe por período em colunas
-    col1, col2, col3 = st.columns(3)
-    periodos = [("🌅 Manhã", col1), ("🌇 Tarde", col2), ("🌙 Noite", col3)]
-
-    for periodo, col in periodos:
+    # Exibe por período (empilhados)
+    for periodo in ["🌅 Manhã", "🌇 Tarde", "🌙 Noite"]:
         subset = disciplinas[disciplinas["periodo"] == periodo]
         if not subset.empty:
-            with col:
-                st.subheader(periodo)
-                st.dataframe(subset[["codigo", "nome", "turma", "inicio", "fim", "sala", "status"]])
+            st.subheader(periodo)
+            st.dataframe(
+                subset[["codigo", "nome", "turma", "inicio", "fim", "sala", "status"]]
+            )
 
