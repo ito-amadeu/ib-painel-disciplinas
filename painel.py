@@ -58,7 +58,7 @@ def calcular_status(row):
     else:
         return "encerrada", None
 
-st.title("📚 Painel de Disciplinas - IB Unicamp")
+st.title("📚 Disciplinas - IB Unicamp")
 
 # Filtra disciplinas de hoje
 disciplinas = disciplinas_do_dia().copy()
@@ -98,3 +98,4 @@ else:
                         ["codigo", "nome", "turma", "inicio", "fim", "sala", "status"]
                     ]
                 )
+
