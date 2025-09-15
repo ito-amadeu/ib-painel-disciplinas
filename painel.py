@@ -2,16 +2,13 @@ import pandas as pd
 import streamlit as st
 from datetime import datetime
 import pytz
+from streamlit_autorefresh import st_autorefresh
+
+# 🔄 Auto-refresh a cada 60 segundos
+st_autorefresh(interval=60 * 1000, key="refresh")
 
 # Configura fuso horário de Brasília
 tz = pytz.timezone("America/Sao_Paulo")
-
-# 🔄 Auto-refresh a cada 60 segundos
-st_autorefresh = st.experimental_memo  # fallback se versão antiga
-if hasattr(st, "autorefresh"):
-    st_autorefresh = st.autorefresh
-
-st_autorefresh(interval=60 * 1000, key="refresh")
 
 # Carrega a planilha
 df = pd.read_csv("disciplinas_ib.csv")
@@ -51,4 +48,3 @@ else:
         if not subset.empty:
             st.subheader(periodo)
             st.dataframe(subset[["codigo", "nome", "turma", "inicio", "fim", "sala"]])
-
