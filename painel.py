@@ -1,14 +1,20 @@
 import pandas as pd
 import streamlit as st
-import time
 from datetime import datetime
 import pytz
 
 # Configura fuso horário de Brasília
 tz = pytz.timezone("America/Sao_Paulo")
 
+# 🔄 Auto-refresh a cada 60 segundos
+st_autorefresh = st.experimental_memo  # fallback se versão antiga
+if hasattr(st, "autorefresh"):
+    st_autorefresh = st.autorefresh
+
+st_autorefresh(interval=60 * 1000, key="refresh")
+
 # Carrega a planilha
-df = pd.read_csv("disciplinas_ib.csv")
+df = pd.read_excel("disciplinas.xlsx")
 
 # Função para obter disciplinas do dia atual
 def disciplinas_do_dia():
@@ -45,7 +51,3 @@ else:
         if not subset.empty:
             st.subheader(periodo)
             st.dataframe(subset[["codigo", "nome", "turma", "inicio", "fim", "sala"]])
-
-# 🔄 Atualiza a cada 60 segundos
-time.sleep(60)
-st.experimental_rerun()
