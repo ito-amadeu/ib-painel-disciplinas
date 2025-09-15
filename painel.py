@@ -1,101 +1,84 @@
 import pandas as pd
 import streamlit as st
-from datetime import datetime
+from datetime import datetime, timedelta
 import pytz
-from streamlit_autorefresh import st_autorefresh
 
-# 🔄 Auto-refresh a cada 60 segundos
-st_autorefresh(interval=60 * 1000, key="refresh")
+# ==============================
+# Configuração
+# ==============================
+st.set_page_config(page_title="📚 Painel de Disciplinas", layout="centered")
 
-# Configura fuso horário de Brasília
-tz = pytz.timezone("America/Sao_Paulo")
-
-# Carrega a planilha
+# Carrega planilha (ajuste o nome do arquivo no Streamlit Cloud)
 df = pd.read_csv("disciplinas_ib.csv")
 
-# Função para obter disciplinas do dia atual
-def disciplinas_do_dia():
-    hoje = datetime.now(tz).strftime("%A")
-    mapa_dias = {
-        "Monday": "Segunda", "Tuesday": "Terça", "Wednesday": "Quarta",
-        "Thursday": "Quinta", "Friday": "Sexta", "Saturday": "Sábado",
-        "Sunday": "Domingo"
-    }
-    return df[df["dia"] == mapa_dias[hoje]]
+# Converte colunas de hora para datetime
+def parse_hora(hora_str):
+    return datetime.strptime(hora_str, "%H:%M").time()
 
-# Função para classificar em períodos
-def classificar_periodo(hora):
-    if hora < "12:00":
-        return "🌅 Manhã"
-    elif hora < "18:00":
-        return "🌇 Tarde"
-    else:
-        return "🌙 Noite"
+df["inicio"] = df["inicio"].apply(parse_hora)
+df["fim"] = df["fim"].apply(parse_hora)
 
-# Função para formatar duração em horas e minutos
-def formatar_tempo(delta):
-    total_min = int(delta.total_seconds() // 60)
-    horas, minutos = divmod(total_min, 60)
-    if horas > 0:
-        return f"{horas}h {minutos}min"
-    else:
-        return f"{minutos}min"
+# Timezone local
+tz = pytz.timezone("America/Sao_Paulo")
+agora = datetime.now(tz)
+dia_semana = agora.strftime("%A")  # Monday, Tuesday...
 
-# Função para calcular status
-def calcular_status(row):
-    agora = datetime.now(tz)
-    inicio = datetime.strptime(row["inicio"], "%H:%M").replace(
-        year=agora.year, month=agora.month, day=agora.day, tzinfo=tz
-    )
-    fim = datetime.strptime(row["fim"], "%H:%M").replace(
-        year=agora.year, month=agora.month, day=agora.day, tzinfo=tz
-    )
+# Mapeamento português -> inglês
+mapa_dias = {
+    "Segunda": "Monday",
+    "Terça": "Tuesday",
+    "Quarta": "Wednesday",
+    "Quinta": "Thursday",
+    "Sexta": "Friday",
+    "Sábado": "Saturday",
+}
+dia_hoje = mapa_dias.get(df["dia"].iloc[0], dia_semana)  # fallback
 
-    if inicio <= agora <= fim:
-        return "andamento", f"⏳ {formatar_tempo(fim - agora)} restantes"
-    elif agora < inicio:
-        return "futuro", f"🕒 começa em {formatar_tempo(inicio - agora)}"
-    else:
-        return "encerrada", None
+# Filtrar disciplinas do dia atual
+df_dia = df[df["dia"] == list(mapa_dias.keys())[list(mapa_dias.values()).index(dia_semana)]].copy()
 
-st.title("📚 Disciplinas - IB Unicamp")
+# Converter para datetime de hoje
+df_dia["inicio_dt"] = df_dia["inicio"].apply(lambda t: datetime.combine(agora.date(), t, tz))
+df_dia["fim_dt"] = df_dia["fim"].apply(lambda t: datetime.combine(agora.date(), t, tz))
 
-# Filtra disciplinas de hoje
-disciplinas = disciplinas_do_dia().copy()
+# Separar em andamento e futuras
+andamento = df_dia[(df_dia["inicio_dt"] <= agora) & (df_dia["fim_dt"] > agora)].copy()
+futuro = df_dia[df_dia["inicio_dt"] > agora].copy()
 
-if disciplinas.empty:
-    st.warning("Nenhuma disciplina encontrada para hoje 📭")
+# Tempo restante em horas:min
+def fmt_tempo(delta):
+    h, m = divmod(int(delta.total_seconds() // 60), 60)
+    return f"{h:02d}:{m:02d}"
+
+andamento["status"] = andamento["fim_dt"].apply(lambda f: "⏳ " + fmt_tempo(f - agora) + " restantes")
+futuro["status"] = futuro["inicio_dt"].apply(lambda i: "🕒 começa em " + fmt_tempo(i - agora))
+
+# Ordenações
+andamento = andamento.sort_values(["inicio_dt", "codigo"])
+futuro = futuro.sort_values(["inicio_dt", "codigo"])
+
+# ==============================
+# Exibição no Streamlit
+# ==============================
+st.title("📚 Painel de Disciplinas - IB Unicamp")
+st.write(f"⏰ Atualizado em: {agora.strftime('%H:%M')} ({dia_semana})")
+
+if andamento.empty:
+    st.info("Nenhuma disciplina em andamento no momento.")
 else:
-    disciplinas["periodo"] = disciplinas["inicio"].apply(classificar_periodo)
-    disciplinas[["categoria", "status"]] = disciplinas.apply(
-        calcular_status, axis=1, result_type="expand"
+    st.subheader("📌 Disciplinas em andamento")
+    st.table(
+        andamento.reset_index(drop=True)[
+            ["codigo", "nome", "turma", "inicio", "fim", "sala", "status"]
+        ]
     )
 
-    # Mantém só em andamento e futuras
-    disciplinas = disciplinas[disciplinas["categoria"] != "encerrada"]
-
-    # Exibe por período (empilhados)
-    for periodo in ["🌅 Manhã", "🌇 Tarde", "🌙 Noite"]:
-        subset = disciplinas[disciplinas["periodo"] == periodo]
-        if not subset.empty:
-            st.subheader(periodo)
-
-            andamento = subset[subset["categoria"] == "andamento"]
-            futuro = subset[subset["categoria"] == "futuro"]
-
-            if not andamento.empty:
-                st.markdown("### ⏳ Em andamento")
-                st.table(
-                    andamento.reset_index(drop=True)[
-                        ["codigo", "nome", "turma", "inicio", "fim", "sala", "status"]
-                    ]
-                )
-
-            if not futuro.empty:
-                st.markdown("### 🕒 Próximas")
-                st.table(
-                    futuro.reset_index(drop=True)[
-                        ["codigo", "nome", "turma", "inicio", "fim", "sala", "status"]
-                    ]
-                )
-
+if futuro.empty:
+    st.info("Nenhuma próxima disciplina para hoje.")
+else:
+    st.subheader("⏭️ Próximas disciplinas")
+    st.table(
+        futuro.reset_index(drop=True)[
+            ["codigo", "nome", "turma", "inicio", "fim", "sala", "status"]
+        ]
+    )
