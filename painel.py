@@ -64,14 +64,10 @@ hoje_pt = map_pt[agora.strftime("%A")]
 st.title("📚 Painel de Disciplinas - IB Unicamp")
 st.markdown(f"### 📅 {hoje_pt} | ⏰ {agora.strftime('%H:%M')}")
 
-# Auto refresh a cada 1 minuto
-st_autorefresh = st.experimental_rerun
+# Auto refresh a cada 1 minuto (60_000 ms)
+from streamlit_autorefresh import st_autorefresh
 
-st_autorefresh_interval = 60_000  # 1 minuto em ms
-st_autorefresh_counter = st.experimental_get_query_params()
-st_autorefresh_counter
-
-st_autorefresh = st.experimental_rerun
+st_autorefresh(interval=60 * 1000, key="refresh")
 
 # Filtrar somente disciplinas de hoje
 df_hoje = df[df["dia"] == hoje_pt].copy()
@@ -109,3 +105,4 @@ if not proximas.empty:
         )
 else:
     st.info("Nenhuma disciplina futura hoje.")
+
