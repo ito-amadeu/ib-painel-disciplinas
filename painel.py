@@ -73,7 +73,7 @@ futuro["período"] = futuro["inicio"].apply(classificar_periodo)
 # ==============================
 # Exibição no Streamlit
 # ==============================
-st.title("📚 Painel de Disciplinas - IB Unicamp")
+st.title("📚 Painel de Disciplinas - IB")
 st.write(f"⏰ Atualizado em: {agora.strftime('%H:%M')} ({dia_portugues})")
 
 if andamento.empty:
@@ -99,3 +99,4 @@ else:
             hide_index=True,
             use_container_width=True
         )
+
