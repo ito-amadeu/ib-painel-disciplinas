@@ -9,7 +9,7 @@ import pytz
 st.set_page_config(page_title="📚 Painel de Disciplinas", layout="centered")
 
 # Carrega planilha
-df = pd.read_csv("disciplinas_ib.csv")
+df = pd.read_excel("disciplinas.xlsx")
 
 # Converte colunas de hora
 def parse_hora(hora_str):
@@ -37,11 +37,15 @@ dia_portugues = [k for k, v in mapa_dias.items() if v == dia_semana][0]
 # Filtrar disciplinas do dia atual
 df_dia = df[df["dia"] == dia_portugues].copy()
 
-# Converter para datetime de hoje
-df_dia["inicio_dt"] = df_dia["inicio"].apply(lambda t: datetime.combine(agora.date(), t, tz))
-df_dia["fim_dt"] = df_dia["fim"].apply(lambda t: datetime.combine(agora.date(), t, tz))
+# Função para combinar hora com timezone correto
+def combinar_com_tz(hora, agora, tz):
+    dt = datetime.combine(agora.date(), hora)  # datetime naive
+    return tz.localize(dt)  # aplica timezone
 
-# Separar em andamento e futuras
+df_dia["inicio_dt"] = df_dia["inicio"].apply(lambda t: combinar_com_tz(t, agora, tz))
+df_dia["fim_dt"] = df_dia["fim"].apply(lambda t: combinar_com_tz(t, agora, tz))
+
+# Separar em andamento e futuras (descartando as já encerradas)
 andamento = df_dia[(df_dia["inicio_dt"] <= agora) & (df_dia["fim_dt"] > agora)].copy()
 futuro = df_dia[df_dia["inicio_dt"] > agora].copy()
 
@@ -73,7 +77,7 @@ futuro["período"] = futuro["inicio"].apply(classificar_periodo)
 # ==============================
 # Exibição no Streamlit
 # ==============================
-st.title("📚 Painel de Disciplinas - IB")
+st.title("📚 Painel de Disciplinas - IB Unicamp")
 st.write(f"⏰ Atualizado em: {agora.strftime('%H:%M')} ({dia_portugues})")
 
 if andamento.empty:
@@ -83,7 +87,7 @@ else:
     for periodo, grupo in andamento.groupby("período"):
         st.markdown(f"### {periodo}")
         st.dataframe(
-            grupo[["codigo", "sala", "turma", "nome", "inicio", "fim", "status"]],
+            grupo[["codigo", "nome", "turma", "inicio", "fim", "sala", "status"]],
             hide_index=True,
             use_container_width=True
         )
@@ -95,10 +99,7 @@ else:
     for periodo, grupo in futuro.groupby("período"):
         st.markdown(f"### {periodo}")
         st.dataframe(
-            grupo[["codigo", "sala", "turma", "nome", "inicio", "fim", "status"]],
+            grupo[["codigo", "nome", "turma", "inicio", "fim", "sala", "status"]],
             hide_index=True,
             use_container_width=True
         )
-
-
-
