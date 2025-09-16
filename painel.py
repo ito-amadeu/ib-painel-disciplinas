@@ -3,13 +3,8 @@ import streamlit as st
 from datetime import datetime
 import pytz
 
-#from streamlit_autorefresh import st_autorefresh
-
 # Atualiza a cada 60 segundos
-#st_autorefresh(interval=60 * 1000, key="refresh")
-
 st.write("<meta http-equiv='refresh' content='60'>", unsafe_allow_html=True)
-
 
 # ===============================
 # Configurações
@@ -42,13 +37,13 @@ hoje = dias_map[dia_semana]
 # Filtra disciplinas de hoje
 df = df[df["dia"] == hoje]
 
-# Cria colunas datetime completas
-df["inicio_dt"] = df["inicio"].apply(lambda t: datetime.combine(agora.date(), t, tzinfo=TZ))
-df["fim_dt"] = df["fim"].apply(lambda t: datetime.combine(agora.date(), t, tzinfo=TZ))
+# Cria colunas datetime completas (corrigido para usar TZ corretamente)
+df["inicio_dt"] = df["inicio"].apply(lambda t: TZ.localize(datetime.combine(agora.date(), t)))
+df["fim_dt"] = df["fim"].apply(lambda t: TZ.localize(datetime.combine(agora.date(), t)))
 
 # Funções auxiliares
 def tempo_formatado(delta):
-    total_min = int(delta.total_seconds() // 60)
+    total_min = int(round(delta.total_seconds() / 60))  # corrigido para arredondar certo
     h, m = divmod(total_min, 60)
     return f"{h:02d}h {m:02d}m"
 
@@ -150,4 +145,3 @@ if not df_proximas.empty:
                 st.markdown(df_to_styled_html(subset, "Começa em"), unsafe_allow_html=True)
 else:
     st.info("Nenhuma disciplina futura para hoje.")
-
