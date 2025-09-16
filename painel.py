@@ -9,7 +9,7 @@ import pytz
 st.set_page_config(page_title="📚 Painel de Disciplinas", layout="centered")
 
 # Carrega planilha
-df = pd.read_excel("disciplinas.xlsx")
+df = pd.read_csv("disciplinas_ib.csv")
 
 # Converte colunas de hora
 def parse_hora(hora_str):
@@ -103,3 +103,4 @@ else:
             hide_index=True,
             use_container_width=True
         )
+
