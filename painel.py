@@ -72,8 +72,12 @@ def info_tempo(row):
 
 df["tempo"] = df.apply(info_tempo, axis=1)
 
-# Reordena colunas (sem status)
+# Reordena colunas
 df = df[["codigo", "sala", "turma", "nome", "inicio", "fim", "tempo", "status", "periodo"]]
+
+# Formata inicio e fim sem segundos
+df["inicio"] = df["inicio"].apply(lambda t: t.strftime("%H:%M"))
+df["fim"] = df["fim"].apply(lambda t: t.strftime("%H:%M"))
 
 # ===============================
 # UI
@@ -119,11 +123,11 @@ def df_to_styled_html(df, tempo_col):
 df_andamento = df[df["status"] == "andamento"].sort_values(by=["inicio", "codigo"])
 if not df_andamento.empty:
     st.subheader("📌 Disciplinas em andamento")
-    for periodo in ["Manhã", "Tarde", "Noite"]:
+    for periodo, icone in [("Manhã", "🌅"), ("Tarde", "🌇"), ("Noite", "🌙")]:
         subset = df_andamento[df_andamento["periodo"] == periodo]
         if not subset.empty:
-            st.markdown(f"#### ☀️ {periodo}")
-            st.markdown(df_to_styled_html(subset, "Tempo restante"), unsafe_allow_html=True)
+            with st.expander(f"{icone} {periodo}", expanded=True):
+                st.markdown(df_to_styled_html(subset, "Tempo restante"), unsafe_allow_html=True)
 else:
     st.info("Nenhuma disciplina em andamento no momento.")
 
@@ -131,10 +135,10 @@ else:
 df_proximas = df[df["status"] == "proxima"].sort_values(by=["inicio", "codigo"])
 if not df_proximas.empty:
     st.subheader("⏭️ Próximas disciplinas")
-    for periodo in ["Manhã", "Tarde", "Noite"]:
+    for periodo, icone in [("Manhã", "🌅"), ("Tarde", "🌇"), ("Noite", "🌙")]:
         subset = df_proximas[df_proximas["periodo"] == periodo]
         if not subset.empty:
-            st.markdown(f"#### ☀️ {periodo}")
-            st.markdown(df_to_styled_html(subset, "Começa em"), unsafe_allow_html=True)
+            with st.expander(f"{icone} {periodo}", expanded=True):
+                st.markdown(df_to_styled_html(subset, "Começa em"), unsafe_allow_html=True)
 else:
     st.info("Nenhuma disciplina futura para hoje.")
