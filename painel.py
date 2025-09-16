@@ -3,10 +3,13 @@ import streamlit as st
 from datetime import datetime
 import pytz
 
-from streamlit_autorefresh import st_autorefresh
+#from streamlit_autorefresh import st_autorefresh
 
 # Atualiza a cada 60 segundos
-st_autorefresh(interval=60 * 1000, key="refresh")
+#st_autorefresh(interval=60 * 1000, key="refresh")
+
+st.write("<meta http-equiv='refresh' content='60'>", unsafe_allow_html=True)
+
 
 # ===============================
 # Configurações
@@ -147,3 +150,4 @@ if not df_proximas.empty:
                 st.markdown(df_to_styled_html(subset, "Começa em"), unsafe_allow_html=True)
 else:
     st.info("Nenhuma disciplina futura para hoje.")
+
