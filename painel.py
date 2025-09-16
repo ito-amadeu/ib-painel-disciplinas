@@ -1,110 +1,123 @@
 import pandas as pd
 import streamlit as st
-from datetime import datetime
+from datetime import datetime, timedelta
 import pytz
 
-# ==============================
-# Configuração
-# ==============================
-st.set_page_config(page_title="📚 Painel de Disciplinas", layout="centered")
+# ===============================
+# Configurações
+# ===============================
+TZ = pytz.timezone("America/Sao_Paulo")
 
-# Carrega planilha
+# Lê os dados
 df = pd.read_csv("disciplinas_ib.csv")
 
-# Converte colunas de hora
-def parse_hora(hora_str):
-    return datetime.strptime(hora_str, "%H:%M").time()
+# Converte horários para datetime
+df["inicio"] = pd.to_datetime(df["inicio"], format="%H:%M").dt.time
+df["fim"] = pd.to_datetime(df["fim"], format="%H:%M").dt.time
 
-df["inicio"] = df["inicio"].apply(parse_hora)
-df["fim"] = df["fim"].apply(parse_hora)
+# Obtém hora atual em SP
+agora = datetime.now(TZ)
+hora_atual = agora.time()
+dia_semana = agora.strftime("%A")  # Ex.: 'Monday'
 
-# Timezone local
-tz = pytz.timezone("America/Sao_Paulo")
-agora = datetime.now(tz)
-dia_semana = agora.strftime("%A")  # Monday, Tuesday...
-
-# Mapeamento português -> inglês
-mapa_dias = {
-    "Segunda": "Monday",
-    "Terça": "Tuesday",
-    "Quarta": "Wednesday",
-    "Quinta": "Thursday",
-    "Sexta": "Friday",
-    "Sábado": "Saturday",
+# Mapeamento português
+dias_map = {
+    "Monday": "Segunda",
+    "Tuesday": "Terça",
+    "Wednesday": "Quarta",
+    "Thursday": "Quinta",
+    "Friday": "Sexta",
+    "Saturday": "Sábado",
+    "Sunday": "Domingo"
 }
-dia_portugues = [k for k, v in mapa_dias.items() if v == dia_semana][0]
+hoje = dias_map[dia_semana]
 
-# Filtrar disciplinas do dia atual
-df_dia = df[df["dia"] == dia_portugues].copy()
+# Filtra apenas disciplinas do dia
+df = df[df["dia"] == hoje]
 
-# Função para combinar hora com timezone correto
-def combinar_com_tz(hora, agora, tz):
-    dt = datetime.combine(agora.date(), hora)  # datetime naive
-    return tz.localize(dt)  # aplica timezone
+# Converte horários para datetime hoje
+df["inicio_dt"] = df["inicio"].apply(lambda t: datetime.combine(agora.date(), t, tzinfo=TZ))
+df["fim_dt"] = df["fim"].apply(lambda t: datetime.combine(agora.date(), t, tzinfo=TZ))
 
-df_dia["inicio_dt"] = df_dia["inicio"].apply(lambda t: combinar_com_tz(t, agora, tz))
-df_dia["fim_dt"] = df_dia["fim"].apply(lambda t: combinar_com_tz(t, agora, tz))
-
-# Separar em andamento e futuras (descartando as já encerradas)
-andamento = df_dia[(df_dia["inicio_dt"] <= agora) & (df_dia["fim_dt"] > agora)].copy()
-futuro = df_dia[df_dia["inicio_dt"] > agora].copy()
-
-# Função formatadora de tempo
-def fmt_tempo(delta):
-    h, m = divmod(int(delta.total_seconds() // 60), 60)
-    return f"{h:02d}:{m:02d}"
-
-# Colunas de status
-andamento["status"] = andamento["fim_dt"].apply(lambda f: "⏳ " + fmt_tempo(f - agora) + " restantes")
-futuro["status"] = futuro["inicio_dt"].apply(lambda i: "🕒 começa em " + fmt_tempo(i - agora))
-
-# Ordenações
-andamento = andamento.sort_values(["inicio_dt", "codigo"])
-futuro = futuro.sort_values(["inicio_dt", "codigo"])
-
-# Classificação por período
-def classificar_periodo(hora):
-    if hora < datetime.strptime("12:00", "%H:%M").time():
-        return "🌅 Manhã"
-    elif hora < datetime.strptime("18:00", "%H:%M").time():
-        return "🌇 Tarde"
+# Classifica status
+def get_status(row):
+    if row["inicio_dt"] <= agora <= row["fim_dt"]:
+        return "Em andamento"
+    elif agora < row["inicio_dt"]:
+        return "Próxima"
     else:
-        return "🌙 Noite"
+        return "Encerrada"
 
-andamento["período"] = andamento["inicio"].apply(classificar_periodo)
-futuro["período"] = futuro["inicio"].apply(classificar_periodo)
+df["status"] = df.apply(get_status, axis=1)
 
-# 🔹 Converter inicio e fim para string HH:MM (sem segundos)
-for df_ in [andamento, futuro]:
-    df_["inicio"] = df_["inicio"].apply(lambda t: t.strftime("%H:%M"))
-    df_["fim"] = df_["fim"].apply(lambda t: t.strftime("%H:%M"))
+# Calcula tempos
+def tempo_restante(row):
+    if row["status"] == "Em andamento":
+        delta = row["fim_dt"] - agora
+        return f"{delta.seconds//3600:02d}h {(delta.seconds//60)%60:02d}m"
+    elif row["status"] == "Próxima":
+        delta = row["inicio_dt"] - agora
+        return f"{delta.seconds//3600:02d}h {(delta.seconds//60)%60:02d}m"
+    return "-"
 
-# ==============================
-# Exibição no Streamlit
-# ==============================
+df["tempo"] = df.apply(tempo_restante, axis=1)
+
+# Reordena colunas
+df = df[["codigo", "sala", "turma", "nome", "inicio", "fim", "status", "tempo"]]
+
+# ===============================
+# Função para estilizar colunas
+# ===============================
+def df_to_styled_html(df):
+    html = df.to_html(index=False, escape=False)
+
+    # aplica classe monoespaçada em certas colunas
+    for col in ["codigo", "sala", "turma", "inicio", "fim"]:
+        for val in df[col].astype(str).unique():
+            html = html.replace(f'<td>{val}', f'<td class="mono">{val}')
+
+    return html
+
+# ===============================
+# Streamlit UI
+# ===============================
+st.set_page_config(layout="wide")
 st.title("📚 Painel de Disciplinas - IB Unicamp")
-st.write(f"⏰ Atualizado em: {agora.strftime('%H:%M')} ({dia_portugues})")
+st.markdown(f"### 📅 Hoje: **{hoje}** | ⏰ Agora: {agora.strftime('%H:%M')}")
 
-if andamento.empty:
-    st.info("Nenhuma disciplina em andamento no momento.")
-else:
+# CSS
+st.markdown("""
+    <style>
+    .mono {
+        font-family: monospace;
+        font-size: 15px;
+    }
+    td, th {
+        font-size: 15px;
+        padding: 6px 12px;
+        text-align: center;
+    }
+    th {
+        font-weight: bold;
+    }
+    table {
+        width: 100%;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+# Em andamento
+df_andamento = df[df["status"] == "Em andamento"].sort_values(by=["inicio", "codigo"])
+if not df_andamento.empty:
     st.subheader("📌 Disciplinas em andamento")
-    for periodo, grupo in andamento.groupby("período"):
-        st.markdown(f"### {periodo}")
-        st.dataframe(
-            grupo[["codigo", "nome", "turma", "inicio", "fim", "sala", "status"]],
-            hide_index=True,
-            use_container_width=True
-        )
-
-if futuro.empty:
-    st.info("Nenhuma próxima disciplina para hoje.")
+    st.markdown(df_to_styled_html(df_andamento), unsafe_allow_html=True)
 else:
+    st.info("Nenhuma disciplina em andamento no momento.")
+
+# Próximas
+df_proximas = df[df["status"] == "Próxima"].sort_values(by=["inicio", "codigo"])
+if not df_proximas.empty:
     st.subheader("⏭️ Próximas disciplinas")
-    for periodo, grupo in futuro.groupby("período"):
-        st.markdown(f"### {periodo}")
-        st.dataframe(
-            grupo[["codigo", "nome", "turma", "inicio", "fim", "sala", "status"]],
-            hide_index=True,
-            use_container_width=True
-        )
+    st.markdown(df_to_styled_html(df_proximas), unsafe_allow_html=True)
+else:
+    st.info("Nenhuma disciplina futura para hoje.")
