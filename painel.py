@@ -1,6 +1,6 @@
 import pandas as pd
 import streamlit as st
-from datetime import datetime, timedelta
+from datetime import datetime
 import pytz
 
 # ==============================
@@ -74,6 +74,11 @@ def classificar_periodo(hora):
 andamento["período"] = andamento["inicio"].apply(classificar_periodo)
 futuro["período"] = futuro["inicio"].apply(classificar_periodo)
 
+# 🔹 Converter inicio e fim para string HH:MM (sem segundos)
+for df_ in [andamento, futuro]:
+    df_["inicio"] = df_["inicio"].apply(lambda t: t.strftime("%H:%M"))
+    df_["fim"] = df_["fim"].apply(lambda t: t.strftime("%H:%M"))
+
 # ==============================
 # Exibição no Streamlit
 # ==============================
@@ -87,7 +92,7 @@ else:
     for periodo, grupo in andamento.groupby("período"):
         st.markdown(f"### {periodo}")
         st.dataframe(
-            grupo[["codigo", "sala", "turma", "nome", "inicio", "fim", "status"]],
+            grupo[["codigo", "nome", "turma", "inicio", "fim", "sala", "status"]],
             hide_index=True,
             use_container_width=True
         )
@@ -99,9 +104,7 @@ else:
     for periodo, grupo in futuro.groupby("período"):
         st.markdown(f"### {periodo}")
         st.dataframe(
-            grupo[["codigo", "sala", "turma", "nome", "inicio", "fim", "status"]],
+            grupo[["codigo", "nome", "turma", "inicio", "fim", "sala", "status"]],
             hide_index=True,
             use_container_width=True
         )
-
-
