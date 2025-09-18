@@ -3,6 +3,12 @@ import streamlit as st
 from datetime import datetime
 import pytz
 
+st.set_page_config(
+    page_title="Painel de Disciplinas - IB Unicamp",  # aparece na aba do navegador
+    page_icon="📚",  # ícone na aba
+    layout="wide"
+)
+
 # Atualiza a cada 60 segundos
 st.write("<meta http-equiv='refresh' content='60'>", unsafe_allow_html=True)
 
@@ -145,3 +151,4 @@ if not df_proximas.empty:
                 st.markdown(df_to_styled_html(subset, "Começa em"), unsafe_allow_html=True)
 else:
     st.info("Nenhuma disciplina futura para hoje.")
+
