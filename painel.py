@@ -4,7 +4,7 @@ from datetime import datetime
 import pytz
 
 st.set_page_config(
-    page_title="Painel de Disciplinas - IB Unicamp",  # aparece na aba do navegador
+    page_title="Painel de Disciplinas da Graduação - IB Unicamp",  # aparece na aba do navegador
     page_icon="📚",  # ícone na aba
     layout="wide"
 )
@@ -92,7 +92,7 @@ df["fim"] = df["fim"].apply(lambda t: t.strftime("%H:%M"))
 # UI
 # ===============================
 st.set_page_config(layout="wide")
-st.title("📚 Painel de Disciplinas - IB Unicamp")
+st.title("📚 Painel de Disciplinas da Graduação - IB Unicamp")
 st.markdown(f"### 📅 Hoje: **{hoje}** | ⏰ Agora: {agora.strftime('%H:%M')}")
 
 # CSS para fonte monoespaçada em colunas selecionadas
@@ -151,4 +151,5 @@ if not df_proximas.empty:
                 st.markdown(df_to_styled_html(subset, "Começa em"), unsafe_allow_html=True)
 else:
     st.info("Nenhuma disciplina futura para hoje.")
+
 
